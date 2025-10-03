@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PadmaTour - Eco-Tips</title>
+    
+    <!-- Eksternal Resources -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Internal yang Diperbaiki -->
+    <style>
+        /* Design System yang Konsisten */
+        :root {
+            --primary-blue: #1E3A8A;
+            --primary-gold: #D4AF37;
+            --secondary-gold: #B8860B;
+            --text-dark: #4B5563;
+            --text-light: #6B7280;
+            --background-light: #F9FAFB;
+            --background-white: #FFFFFF;
+            --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-medium: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--background-light);
+            line-height: 1.6;
+        }
+        
+        /* Navigation */
+        .navigation-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            color: white;
+            background-color: var(--primary-blue);
+        }
+        
+        .logo-brand {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            background-color: var(--primary-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .nav-menu {
+            display: none;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-gold);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            font-weight: 600;
+            color: var(--primary-gold);
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--primary-gold);
+            color: white;
+            font-weight: bold;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+        
+        /* Section Titles */
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-size: 1.875rem;
+            font-weight: bold;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-gold);
+        }
+        
+        /* Cards */
+        .card {
+            background-color: var(--background-white);
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s ease;
+            border: 1px solid #E5E7EB;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        /* Eco Tips Cards */
+        .eco-tips-card {
+            overflow: hidden;
+            height: 100%;
+            text-align: center;
+            padding: 2rem 1.5rem;
+        }
+        
+        .eco-icon {
+            width: 5rem;
+            height: 5rem;
+            background-color: rgba(212, 175, 55, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--primary-gold);
+            font-size: 2rem;
+        }
+        
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-gold);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: var(--shadow-medium);
+            border: none;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #1F2937;
+            color: white;
+            padding: 3rem 0;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .social-link {
+            width: 2rem;
+            height: 2rem;
+            background-color: #374151;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary-gold);
+        }
+        
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .nav-menu {
+                display: flex;
+                gap: 2rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            
+            .equal-height-cards {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+        }
+        
+        /* Aksesibilitas */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* Focus styles for keyboard navigation */
+        button:focus,
+        a:focus {
+            outline: 2px solid var(--primary-gold);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="sr-only">Skip to main content</a>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up" aria-hidden="true"></i>
+    </button>
+
+    <!-- Header Section -->
+    <header role="banner">
+        <!-- Navigation -->
+        <nav class="navigation-container" role="navigation" aria-label="Main navigation">
+            <div class="logo-brand">
+                <div class="logo-icon">
+                    <img src="assets/images/logo.png" alt="PadmaTour Logo" class="w-6 h-6">
+                </div>
+                <div class="logo-text">PadmaTour</div>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Beranda</a>
+                <a href="profil-daerah.html" class="nav-link">Profil Daerah</a>
+                <a href="eco-tips.html" class="nav-link active" aria-current="page">EcoTips</a>
+                <a href="#" class="nav-link">Tentang</a>
+            </div>
+            
+            <button class="md:hidden text-white" id="mobileMenuButton" aria-expanded="false" aria-controls="mobileMenu">
+                <i class="fas fa-bars text-xl" aria-hidden="true"></i>
+                <span class="sr-only">Toggle menu</span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" role="main">
+        <!-- Section 1: Eco Tips Cards -->
+        <section class="py-20 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <h1 class="section-title text-center fade-in">Eco-Tips untuk Wisatawan</h1>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12 fade-in">
+                    Panduan praktis untuk menjadi wisatawan yang bertanggung jawab dan ramah lingkungan di Bengkulu
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                    <div class="card eco-tips-card fade-in">
+                        <div class="eco-icon">
+                            <i class="fas fa-ban"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Kurangi Penggunaan Plastik</h3>
+                        <p class="text-gray-600 mb-4">Bawa botol minum isi ulang, tas belanja kain, dan tolak sedotan plastik. Dukung program pengurangan sampah plastik di Bengkulu yang sedang gencar dilakukan.</p>
+                        <div class="text-sm bg-green-50 text-green-700 px-3 py-1 rounded-full inline-block">Dampak Tinggi</div>
+                    </div>
+                    
+                    <div class="card eco-tips-card fade-in">
+                        <div class="eco-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Hemat Penggunaan Air</h3>
+                        <p class="text-gray-600 mb-4">Batasi waktu mandi, gunakan kembali handuk, dan laporkan keran bocor di akomodasi Anda. Sumber air bersih di Bengkulu perlu dilestarikan untuk masa depan.</p>
+                        <div class="text-sm bg-yellow-50 text-yellow-700 px-3 py-1 rounded-full inline-block">Dampak Sedang</div>
+                    </div>
+                    
+                    <div class="card eco-tips-card fade-in">
+                        <div class="eco-icon">
+                            <i class="fas fa-bicycle"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Transportasi Ramah Lingkungan</h3>
+                        <p class="text-gray-600 mb-4">Pilih bersepeda, berjalan kaki, atau transportasi umum. Jika menyewa kendaraan, pilih yang hemat bahan bakar. Hindari perjalanan pendek dengan mobil.</p>
+                        <div class="text-sm bg-green-50 text-green-700 px-3 py-1 rounded-full inline-block">Dampak Tinggi</div>
+                    </div>
+                    
+                    <div class="card eco-tips-card fade-in">
+                        <div class="eco-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Dukung Ekonomi Lokal</h3>
+                        <p class="text-gray-600 mb-4">Beli kerajinan tangan langsung dari pengrajin, makan di warung lokal, dan pilih tur dengan pemandu lokal. Dukung pelestarian budaya Bengkulu.</p>
+                        <div class="text-sm bg-yellow-50 text-yellow-700 px-3 py-1 rounded-full inline-block">Dampak Sedang</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Komitmen Kami -->
+        <section class="py-8 bg-blue-900 text-white">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto text-center fade-in">
+                    <h2 class="text-3xl font-bold mb-6">Komitmen Kami untuk Bengkulu Berkelanjutan</h2>
+                    <p class="text-lg">
+                        PadmaTour berkomitmen untuk mempromosikan pariwisata berkelanjutan yang menghormati alam, budaya, dan masyarakat lokal. 
+                        Kami mendukung inisiatif lokal pelestarian lingkungan untuk menciptakan dampak positif.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Kalkulator Jejak Karbon dan Panduan Etika Budaya -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                    <!-- Kalkulator Jejak Karbon -->
+                    <div class="fade-in equal-height-cards">
+                        <h2 class="section-title text-left mb-6">Kalkulator Jejak Karbon</h2>
+                        
+                        <div class="card p-8 flex-grow">
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-gray-700 mb-2 font-medium">Transportasi (km per hari)</label>
+                                    <input type="number" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500" 
+                                           value="50" id="transport-input" min="0">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 mb-2 font-medium">Penggunaan Plastik (item per hari)</label>
+                                    <input type="number" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500" 
+                                           value="3" id="plastic-input" min="0">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 mb-2 font-medium">Penggunaan Air (liter per hari)</label>
+                                    <input type="number" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500" 
+                                           value="120" id="water-input" min="0">
+                                </div>
+                                <button id="calculate-btn" class="btn-primary w-full mt-6 py-4 text-lg">Hitung Jejak Karbon Saya</button>
+                            </div>
+                            
+                            <div id="carbon-result" class="mt-8 p-6 bg-blue-50 rounded-lg hidden">
+                                <h3 class="text-xl font-bold text-gray-800 mb-4">Hasil Perhitungan Jejak Karbon</h3>
+                                <div class="flex items-center mb-4">
+                                    <div class="text-3xl font-bold text-amber-600 mr-3"><span id="carbon-value">0</span> kg</div>
+                                    <div class="text-gray-700">CO₂ per hari</div>
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <div class="flex justify-between text-sm text-gray-600 mb-2">
+                                        <span>Rendah</span>
+                                        <span>Tinggi</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-3">
+                                        <div id="carbon-bar" class="bg-amber-600 h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div id="carbon-message" class="p-4 rounded-lg text-center">
+                                    <!-- Message will be inserted here by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Panduan Etika Budaya -->
+                    <div class="fade-in equal-height-cards">
+                        <h2 class="section-title text-left mb-6">Panduan Etika Budaya</h2>
+                        
+                        <div class="card p-8 flex-grow">
+                            <div class="space-y-6">
+                                <div class="flex items-start">
+                                    <div class="eco-icon mr-4 flex-shrink-0">
+                                        <i class="fas fa-hands fa-sm"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-gray-800 text-lg mb-2">Sikap Hormat di Tempat Ibadah</h3>
+                                        <p class="text-gray-600">Pakai pakaian sopan saat masuk masjid atau tempat ibadah lainnya, tidak memotret saat upacara, dan jangan naik ke struktur suci.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="eco-icon mr-4 flex-shrink-0">
+                                        <i class="fas fa-user fa-sm"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-gray-800 text-lg mb-2">Pakaian Sopan</h3>
+                                        <p class="text-gray-600">Hindari pakaian minim di semua area, termasuk pantai. Di Bengkulu, tidak diperbolehkan mengenakan pakaian renang yang minim di pantai.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="eco-icon mr-4 flex-shrink-0">
+                                        <i class="fas fa-handshake fa-sm"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-gray-800 text-lg mb-2">Salam dan Hormat</h3>
+                                        <p class="text-gray-600">Ucapkan salam saat bertemu penduduk lokal. Hormati adat istiadat dan tradisi masyarakat Bengkulu.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="eco-icon mr-4 flex-shrink-0">
+                                        <i class="fas fa-volume-mute fa-sm"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-gray-800 text-lg mb-2">Kebisingan</h3>
+                                        <p class="text-gray-600">Hindari suara keras di area pemukiman, terutama pada malam hari atau saat ada acara adat berlangsung.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container mx-auto px-6">
+            <div class="footer-content">
+                <div class="flex flex-col">
+                    <div class="flex items-center mb-4">
+                        <div class="logo-icon">
+                            <img src="assets/images/logo.png" alt="PadmaTour Logo" class="w-6 h-6">
+                        </div>
+                        <div class="logo-text">PadmaTour</div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6">
+                        PadmaTour membantu Anda menjelajahi dan lebih mengenal keindahan alam, budaya, dan warisan sejarah daerah Bengkulu. Mari bersama kita jaga kelestarian lingkungan Bengkulu.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram text-xs" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="TikTok">
+                            <i class="fab fa-tiktok text-xs" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="YouTube">
+                            <i class="fab fa-youtube text-xs" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col">
+                    <h3 class="text-md font-bold mb-4">Navigasi</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition nav-link">Beranda</a></li>
+                        <li><a href="profil-daerah.html" class="text-gray-400 hover:text-white transition nav-link">Profil Daerah</a></li>
+                        <li><a href="eco-tips.html" class="text-gray-400 hover:text-white transition nav-link active">EcoTips</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition nav-link">Tentang</a></li>
+                    </ul>
+                </div>
+                
+                <div class="flex flex-col">
+                    <h3 class="text-md font-bold mb-4">Kontak Kami</h3>
+                    <ul class="space-y-3 text-gray-400 text-sm">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-amber-500 text-xs" aria-hidden="true"></i>
+                            <a href="mailto:info@padmatour.com" class="hover:text-white transition">info@padmatour.com</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3 text-amber-500 text-xs" aria-hidden="true"></i>
+                            <span>+62 812 3456 7890</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3 text-amber-500 text-xs" aria-hidden="true"></i>
+                            <span>Jl. Veteran No. 1, Kota Bengkulu</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400 text-sm">
+                <p>© 2025 PadmaTour. Semua hak dilindungi undang-undang.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Inisialisasi setelah DOM siap
+        document.addEventListener('DOMContentLoaded', function() {
+            // Back to top button
+            const backToTopButton = document.getElementById('backToTop');
+            
+            if (backToTopButton) {
+                window.addEventListener('scroll', () => {
+                    if (window.pageYOffset > 300) {
+                        backToTopButton.classList.add('show');
+                    } else {
+                        backToTopButton.classList.remove('show');
+                    }
+                });
+                
+                backToTopButton.addEventListener('click', () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+            
+            // Fade in animation
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const fadeInObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            fadeElements.forEach(element => {
+                fadeInObserver.observe(element);
+            });
+            
+            // Carbon calculator functionality
+            const calculateBtn = document.getElementById('calculate-btn');
+            const transportInput = document.getElementById('transport-input');
+            const plasticInput = document.getElementById('plastic-input');
+            const waterInput = document.getElementById('water-input');
+            const carbonResult = document.getElementById('carbon-result');
+            const carbonValue = document.getElementById('carbon-value');
+            const carbonBar = document.getElementById('carbon-bar');
+            const carbonMessage = document.getElementById('carbon-message');
+            
+            if (calculateBtn) {
+                calculateBtn.addEventListener('click', function() {
+                    const transport = parseFloat(transportInput.value) || 0;
+                    const plastic = parseFloat(plasticInput.value) || 0;
+                    const water = parseFloat(waterInput.value) || 0;
+                    
+                    // Calculate carbon footprint
+                    const transportCarbon = transport * 0.2; // 0.2 kg CO2 per km
+                    const plasticCarbon = plastic * 0.1; // 0.1 kg CO2 per plastic item
+                    const waterCarbon = water * 0.0003; // 0.0003 kg CO2 per liter
+                    
+                    const totalCarbon = transportCarbon + plasticCarbon + waterCarbon;
+                    
+                    // Display result
+                    carbonValue.textContent = totalCarbon.toFixed(2);
+                    
+                    // Update progress bar
+                    let percentage = Math.min(totalCarbon / 10 * 100, 100);
+                    carbonBar.style.width = percentage + '%';
+                    
+                    // Set message based on carbon footprint
+                    let messageText, messageClass;
+                    if (totalCarbon < 3) {
+                        messageText = "Jejak karbon Anda rendah! Terus pertahankan gaya hidup ramah lingkungan.";
+                        messageClass = "bg-green-100 text-green-800";
+                    } else if (totalCarbon < 7) {
+                        messageText = "Jejak karbon Anda sedang. Ada beberapa area yang bisa ditingkatkan untuk mengurangi dampak lingkungan.";
+                        messageClass = "bg-yellow-100 text-yellow-800";
+                    } else {
+                        messageText = "Jejak karbon Anda tinggi. Pertimbangkan untuk mengurangi penggunaan transportasi dan plastik sekali pakai.";
+                        messageClass = "bg-red-100 text-red-800";
+                    }
+                    
+                    carbonMessage.innerHTML = `<p class="${messageClass} p-3 rounded-lg">${messageText}</p>`;
+                    
+                    // Show result
+                    carbonResult.classList.remove('hidden');
+                    
+                    // Equalize card heights after calculation
+                    setTimeout(equalizeCardHeights, 100);
+                });
+            }
+            
+            // Mobile menu functionality
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', function() {
+                    const navMenu = document.querySelector('.nav-menu');
+                    const expanded = this.getAttribute('aria-expanded') === 'true';
+                    this.setAttribute('aria-expanded', !expanded);
+                    
+                    if (expanded) {
+                        navMenu.style.display = 'none';
+                    } else {
+                        navMenu.style.display = 'flex';
+                        navMenu.style.flexDirection = 'column';
+                        navMenu.style.position = 'absolute';
+                        navMenu.style.top = '100%';
+                        navMenu.style.left = '0';
+                        navMenu.style.right = '0';
+                        navMenu.style.backgroundColor = 'var(--primary-blue)';
+                        navMenu.style.padding = '1rem';
+                        navMenu.style.zIndex = '1000';
+                    }
+                });
+            }
+            
+            // Function to equalize card heights
+            function equalizeCardHeights() {
+                if (window.innerWidth >= 768) {
+                    const carbonCard = document.querySelector('#carbon-section .card');
+                    const cultureCard = document.querySelector('#culture-section .card');
+                    
+                    if (carbonCard && cultureCard) {
+                        const carbonHeight = carbonCard.offsetHeight;
+                        const cultureHeight = cultureCard.offsetHeight;
+                        const maxHeight = Math.max(carbonHeight, cultureHeight);
+                        
+                        carbonCard.style.height = maxHeight + 'px';
+                        cultureCard.style.height = maxHeight + 'px';
+                    }
+                }
+            }
+            
+            // Call equalizeCardHeights on window resize
+            window.addEventListener('resize', equalizeCardHeights);
+            
+            // Initial call to equalize card heights
+            setTimeout(equalizeCardHeights, 100);
+        });
+    </script>
+</body>
+</html>

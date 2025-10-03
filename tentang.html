@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang - PadmaTour | Platform Wisata Edukasi Bengkulu</title>
+    
+    <!-- Eksternal Resources -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E3A8A',
+                        secondary: '#D4AF37',
+                        'secondary-dark': '#B8860B',
+                        'text-dark': '#4B5563',
+                        'text-light': '#6B7280',
+                        'background-light': '#F9FAFB',
+                        'background-white': '#FFFFFF',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Internal yang Diperbaiki -->
+    <style>
+        /* Design System yang Konsisten */
+        :root {
+            --primary-blue: #1E3A8A;
+            --primary-gold: #D4AF37;
+            --secondary-gold: #B8860B;
+            --text-dark: #4B5563;
+            --text-light: #6B7280;
+            --background-light: #F9FAFB;
+            --background-white: #FFFFFF;
+            --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-medium: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--background-light);
+            line-height: 1.6;
+        }
+        
+        /* Navigation */
+        .navigation-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            color: white;
+            background-color: var(--primary-blue);
+        }
+        
+        .logo-brand {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            background-color: var(--primary-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .nav-menu {
+            display: none;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+            color: white;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-gold);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            font-weight: 600;
+            color: var(--primary-gold);
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--primary-gold);
+            color: white;
+            font-weight: bold;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+        
+        /* Section Titles */
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-size: 1.875rem;
+            font-weight: bold;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-gold);
+        }
+        
+        /* Cards */
+        .card {
+            background-color: var(--background-white);
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s ease;
+            border: 1px solid #E5E7EB;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-gold);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: var(--shadow-medium);
+            border: none;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #1F2937;
+            color: white;
+            padding: 3rem 0;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .social-link {
+            width: 2rem;
+            height: 2rem;
+            background-color: #374151;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary-gold);
+        }
+        
+        /* Form Styles */
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #D1D5DB;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+        
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Custom Form Styling */
+        .form-container {
+            background-color: var(--background-white);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+        
+        .form-field {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .notification.success {
+            background-color: #10B981;
+        }
+        
+        .notification.error {
+            background-color: #EF4444;
+        }
+        
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .nav-menu {
+                display: flex;
+                gap: 2rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+        
+        /* Aksesibilitas */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* Focus styles for keyboard navigation */
+        button:focus,
+        a:focus {
+            outline: 2px solid var(--primary-gold);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="sr-only">Skip to main content</a>
+
+    <!-- Notification -->
+    <div id="notification" class="notification" role="alert" aria-live="polite"></div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up" aria-hidden="true"></i>
+    </button>
+
+    <!-- Header Section -->
+    <header role="banner">
+        <!-- Navigation -->
+        <nav class="navigation-container" role="navigation" aria-label="Main navigation">
+            <div class="logo-brand">
+                <div class="logo-icon">
+                    <img src="assets/images/logo.png" alt="PadmaTour Logo" class="w-6 h-6">
+                </div>
+                <div class="logo-text">PadmaTour</div>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Beranda</a>
+                <a href="profil-daerah.html" class="nav-link">Profil Daerah</a>
+                <a href="eco-tips.html" class="nav-link">EcoTips</a>
+                <a href="tentang.html" class="nav-link active" aria-current="page">Tentang</a>
+            </div>
+            
+            <button class="md:hidden text-white" id="mobileMenuButton" aria-expanded="false" aria-controls="mobileMenu">
+                <i class="fas fa-bars text-xl" aria-hidden="true"></i>
+                <span class="sr-only">Toggle menu</span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" role="main">
+        <!-- About & Contact Section -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16 fade-in">
+                    <!-- Left Column: About PadmaTour -->
+                    <div>
+                        <h2 class="text-2xl font-bold text-primary mb-6">Apa itu PadmaTour?</h2>
+                        <p class="text-gray-700 mb-4">PadmaTour adalah sebuah platform edukasi untuk memberdayakan pariwisata edukatif dan ramah lingkungan di Bengkulu melalui teknologi digital.</p>
+                        <p class="text-gray-700 mb-4">Kami berkomitmen untuk menyediakan platform yang menghubungkan wisatawan dengan pengalaman otentik Bengkulu sambil mendukung pelestarian lingkungan dan budaya lokal.</p>
+                        <p class="text-gray-700 mb-4">Informasi tentang daerah Bengkulu lebih lanjut bisa Anda browsing melalui sumber-sumber terpercaya.</p>
+                        
+                        <div class="mt-8">
+                            <h3 class="text-xl font-bold text-secondary mb-4">Visi & Misi</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <i class="fas fa-bullseye text-primary mt-1 mr-3"></i>
+                                    <span><span class="font-bold">Visi:</span> Menjadi platform edukasi wisata terdepan yang mendukung keberlanjutan lingkungan dan budaya Bengkulu</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-tasks text-primary mt-1 mr-3"></i>
+                                    <span><span class="font-bold">Misi:</span> Memberikan pengalaman wisata edukatif, mendukung ekonomi lokal, dan mempromosikan praktik pariwisata berkelanjutan</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column: Contact Form -->
+                    <div>
+                        <div class="form-container">
+                            <h2 class="text-2xl font-bold text-primary mb-6">Hubungi Kami</h2>
+                            <form id="contactForm" class="space-y-4">
+                                <div class="form-field">
+                                    <label for="nama" class="form-label">Nama Lengkap</label>
+                                    <input type="text" id="nama" class="form-input" required>
+                                </div>
+                                
+                                <div class="form-field">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" id="email" class="form-input" required>
+                                </div>
+                                
+                                <div class="form-field">
+                                    <label for="subjek" class="form-label">Subjek</label>
+                                    <select id="subjek" class="form-input" required>
+                                        <option value="">Pilih Subjek</option>
+                                        <option>Pertanyaan Umum</option>
+                                        <option>Kerjasama</option>
+                                        <option>Kritik & Saran</option>
+                                        <option>Lainnya</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-field">
+                                    <label for="pesan" class="form-label">Pesan</label>
+                                    <textarea id="pesan" rows="4" class="form-input" required></textarea>
+                                </div>
+                                
+                                <button type="submit" class="btn-primary w-full">Kirim Pesan</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container mx-auto px-6">
+            <div class="footer-content">
+                <div class="flex flex-col">
+                    <div class="flex items-center mb-4">
+                        <div class="logo-icon">
+                            <img src="assets/images/logo.png" alt="PadmaTour Logo" class="w-6 h-6">
+                        </div>
+                        <div class="logo-text">PadmaTour</div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6">
+                        PadmaTour membantu Anda menjelajahi dan lebih mengenal keindahan alam, budaya, dan warisan sejarah daerah Bengkulu. Mari bersama kita jaga kelestarian lingkungan Bengkulu.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram text-xs" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="TikTok">
+                            <i class="fab fa-tiktok text-xs" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="YouTube">
+                            <i class="fab fa-youtube text-xs" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col">
+                    <h3 class="text-md font-bold mb-4">Navigasi</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition nav-link">Beranda</a></li>
+                        <li><a href="profil-daerah.html" class="text-gray-400 hover:text-white transition nav-link">Profil Daerah</a></li>
+                        <li><a href="eco-tips.html" class="text-gray-400 hover:text-white transition nav-link">EcoTips</a></li>
+                        <li><a href="tentang.html" class="text-gray-400 hover:text-white transition nav-link active">Tentang</a></li>
+                    </ul>
+                </div>
+                
+                <div class="flex flex-col">
+                    <h3 class="text-md font-bold mb-4">Kontak Kami</h3>
+                    <ul class="space-y-3 text-gray-400 text-sm">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-amber-500 text-xs" aria-hidden="true"></i>
+                            <a href="mailto:abcdf@gmail.com" class="hover:text-white transition">abcdf@gmail.com</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3 text-amber-500 text-xs" aria-hidden="true"></i>
+                            <span>+62 812 3456 7890</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3 text-amber-500 text-xs" aria-hidden="true"></i>
+                            <span>Jl. Aja Dulu, Bengkulu</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400 text-sm">
+                <p>© 2025 PadmaTour. Semua hak dilindungi undang-undang.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Inisialisasi setelah DOM siap
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu functionality
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', function() {
+                    const expanded = this.getAttribute('aria-expanded') === 'true';
+                    this.setAttribute('aria-expanded', !expanded);
+                    // Implementation for mobile menu toggle
+                    const navMenu = document.querySelector('.nav-menu');
+                    if (navMenu) {
+                        if (expanded) {
+                            navMenu.style.display = 'none';
+                        } else {
+                            navMenu.style.display = 'flex';
+                            navMenu.style.flexDirection = 'column';
+                            navMenu.style.position = 'absolute';
+                            navMenu.style.top = '100%';
+                            navMenu.style.left = '0';
+                            navMenu.style.right = '0';
+                            navMenu.style.backgroundColor = '#1E3A8A';
+                            navMenu.style.padding = '1rem';
+                            navMenu.style.zIndex = '1000';
+                        }
+                    }
+                });
+            }
+            
+            // Back to top button
+            const backToTopButton = document.getElementById('backToTop');
+            
+            if (backToTopButton) {
+                window.addEventListener('scroll', () => {
+                    if (window.pageYOffset > 300) {
+                        backToTopButton.classList.add('show');
+                    } else {
+                        backToTopButton.classList.remove('show');
+                    }
+                });
+                
+                backToTopButton.addEventListener('click', () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+            
+            // Form submission with notification
+            const contactForm = document.getElementById('contactForm');
+            const notification = document.getElementById('notification');
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form data
+                    const nama = document.getElementById('nama').value;
+                    const email = document.getElementById('email').value;
+                    const subjek = document.getElementById('subjek').value;
+                    const pesan = document.getElementById('pesan').value;
+                    
+                    // Simple validation
+                    if (!nama || !email || !subjek || !pesan) {
+                        showNotification('Harap lengkapi semua field!', 'error');
+                        return;
+                    }
+                    
+                    // Show success message
+                    showNotification('Terima kasih! Pesan Anda telah berhasil dikirim.', 'success');
+                    
+                    // Reset form
+                    this.reset();
+                });
+            }
+            
+            // Function to show notification
+            function showNotification(message, type) {
+                notification.textContent = message;
+                notification.className = 'notification ' + type;
+                notification.classList.add('show');
+                
+                // Hide notification after 5 seconds
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html>
