@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PadmaTour - Jelajahi Pesona Warisan Budaya Bengkulu</title>
+    
+    <!-- Eksternal Resources -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Internal yang Diperbaiki -->
+    <style>
+        /* Design System yang Konsisten */
+        :root {
+            --primary-blue: #1E3A8A;
+            --primary-gold: #D4AF37;
+            --secondary-gold: #B8860B;
+            --text-dark: #4B5563;
+            --text-light: #6B7280;
+            --background-light: #F9FAFB;
+            --background-white: #FFFFFF;
+            --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-medium: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--background-light);
+            line-height: 1.6;
+        }
+        
+        /* Hero Section */
+        .hero-background {
+            background: linear-gradient(rgba(30, 58, 138, 0.85), rgba(30, 58, 138, 0.7)), 
+                        url('https://images.unsplash.com/photo-1520250497594-1ba3b16d7b1c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Navigation */
+        .navigation-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            color: white;
+        }
+        
+        .logo-brand {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            background-color: var(--primary-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .nav-menu {
+            display: none;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-gold);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            font-weight: 600;
+            color: var(--primary-gold);
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--primary-gold);
+            color: white;
+            font-weight: bold;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+            font-weight: bold;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .btn-secondary:hover {
+            background-color: white;
+            color: var(--primary-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Section Titles */
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-size: 1.875rem;
+            font-weight: bold;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-gold);
+        }
+        
+        .section-title-right {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .section-title-right::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            right: 0;
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-gold);
+        }
+        
+        /* Cards */
+        .card {
+            background-color: var(--background-white);
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s ease;
+            border: 1px solid #E5E7EB;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .destination-card {
+            overflow: hidden;
+            height: 100%;
+        }
+        
+        .destination-image {
+            position: relative;
+            height: 240px;
+            overflow: hidden;
+        }
+        
+        .destination-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(30, 58, 138, 0.9), transparent);
+            padding: 20px 15px 15px;
+            color: white;
+        }
+        
+        .fact-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 300px;
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .fact-icon-container {
+            width: 5rem;
+            height: 5rem;
+            background-color: rgba(212, 175, 55, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+        
+        /* Carousel */
+        .carousel-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem 0;
+        }
+        
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+            gap: 1.5rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 0 1rem;
+        }
+        
+        .carousel-track::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .carousel-item {
+            flex: 0 0 320px;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-item.active {
+            transform: scale(1.05);
+            z-index: 10;
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .carousel-item:not(.active) {
+            transform: scale(0.95);
+            opacity: 0.85;
+        }
+        
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: white;
+            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-medium);
+            z-index: 10;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .carousel-nav.prev {
+            left: 0;
+            transform: translate(-50%, -50%);
+        }
+        
+        .carousel-nav.next {
+            right: 0;
+            transform: translate(50%, -50%);
+        }
+        
+        .carousel-nav i {
+            color: var(--primary-gold);
+        }
+        
+        /* Map Section */
+        .map-container {
+            background-color: white;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            height: 20rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-light);
+            margin: 0 auto;
+            max-width: 64rem;
+            position: relative;
+        }
+        
+        .bengkulu-map {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .location-marker {
+            position: absolute;
+            top: 45%;
+            left: 40%;
+            color: var(--primary-gold);
+            font-size: 2rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                text-shadow: 0 0 0 rgba(212, 175, 55, 0.7);
+            }
+            70% {
+                transform: scale(1.1);
+                text-shadow: 0 0 10px rgba(212, 175, 55, 0);
+            }
+            100% {
+                transform: scale(0.95);
+                text-shadow: 0 0 0 rgba(212, 175, 55, 0);
+            }
+        }
+        
+        /* Info Overlay */
+        .info-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(30, 58, 138, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 20;
+            border-radius: 0.5rem;
+        }
+        
+        .info-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        /* Counter */
+        .counter {
+            font-variant-numeric: tabular-nums;
+        }
+        
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-gold);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: var(--shadow-medium);
+            border: none;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #1F2937;
+            color: white;
+            padding: 3rem 0;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .social-link {
+            width: 2rem;
+            height: 2rem;
+            background-color: #374151;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary-gold);
+        }
+        
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .nav-menu {
+                display: flex;
+                gap: 2rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            
+            .fact-card.middle {
+                margin-top: 2rem;
+            }
+        }
+        
+        /* Aksesibilitas */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* Focus styles for keyboard navigation */
+        button:focus,
+        a:focus {
+            outline: 2px solid var(--primary-gold);
+            outline-offset: 2px;
+        }
+
+        /* Perbaikan untuk destination title dengan subtitle */
+        .destination-title h3 {
+            margin-bottom: 0.25rem;
+        }
+
+        .destination-title p {
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        /* Perbaikan untuk dots indicator */
+        .destination-dots .destination-dot {
+            transition: all 0.3s ease;
+        }
+
+        .destination-dots .destination-dot.active {
+            background-color: #D4AF37;
+            transform: scale(1.2);
+        }
+
+        /* Tombol tutup overlay di kiri atas */
+        .close-overlay-btn {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="sr-only">Skip to main content</a>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up" aria-hidden="true"></i>
+    </button>
+
+    <!-- Header Section -->
+    <header role="banner">
+        <!-- Hero Section -->
+        <section class="hero-background" aria-labelledby="hero-heading">
+            <!-- Navigation -->
+            <nav class="navigation-container" role="navigation" aria-label="Main navigation">
+                <div class="logo-brand">
+                    <div class="logo-icon">
+                        <!-- Logo placeholder -->
+                        <i class="fas fa-mountain text-white"></i>
+                    </div>
+                    <div class="logo-text">PadmaTour</div>
+                </div>
+                
+                <div class="nav-menu">
+                    <a href="#" class="nav-link active" aria-current="page">Beranda</a>
+                    <a href="#" class="nav-link">Profil Daerah</a>
+                    <a href="#" class="nav-link">EcoTips</a>
+                    <a href="#" class="nav-link">Tentang</a>
+                </div>
+                
+                <button class="md:hidden text-white" id="mobileMenuButton" aria-expanded="false" aria-controls="mobileMenu">
+                    <i class="fas fa-bars text-xl" aria-hidden="true"></i>
+                    <span class="sr-only">Toggle menu</span>
+                </button>
+            </nav>
+
+            <!-- Hero Content -->
+            <div class="flex-grow flex flex-col justify-center items-center text-white text-center px-6">
+                <h1 id="hero-heading" class="text-4xl md:text-6xl font-bold mb-6">Warisan Budaya Bengkulu</h1>
+                <p class="max-w-2xl text-lg md:text-xl mb-10">
+                    Menjelajahi keindahan alam, budaya, dan sejarah Bengkulu dengan PadmaTour. 
+                    Mari bersama kita jaga kelestarian lingkungan dan lestarikan warisan budaya Bengkulu untuk generasi mendatang.
+                </p>
+                <div class="flex flex-col md:flex-row gap-4 md:gap-6">
+                    <button class="btn-primary">
+                        Mulai Eksplorasi
+                    </button>
+                    <button class="btn-secondary">
+                        Pelajari Lebih Lanjut
+                    </button>
+                </div>
+            </div>
+        </section>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" role="main">
+        <!-- Statistics Section -->
+        <section class="py-16 bg-white" aria-labelledby="stats-heading">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col items-center">
+                    <h2 id="stats-heading" class="sr-only">Statistik Bengkulu</h2>
+                    <div class="w-full max-w-2xl">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                            <div class="text-center">
+                                <div class="text-3xl md:text-4xl font-bold text-amber-600 mb-2 counter" data-target="2115024">0</div>
+                                <div class="text-gray-600">Penduduk</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl md:text-4xl font-bold text-amber-600 mb-2 counter" data-target="12">0</div>
+                                <div class="text-gray-600">Suku</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl md:text-4xl font-bold text-amber-600 mb-2 counter" data-target="10">0</div>
+                                <div class="text-gray-600">Kabupaten/Kota</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl md:text-4xl font-bold text-amber-600 mb-2 counter" data-target="3">0</div>
+                                <div class="text-gray-600">Bahasa Daerah</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Third Section - Province Info dengan Tombol X di Kiri Atas -->
+        <section class="py-16 bg-gray-50 relative">
+            <div class="container mx-auto px-6">
+                <!-- Title & Info Button -->
+                <div class="flex justify-between items-start mb-8">
+                    <!-- Info Button di kiri -->
+                    <button id="infoBtn" class="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-md z-10">
+                        <i class="fas fa-info" id="infoIcon"></i>
+                    </button>
+                    
+                    <!-- Title di kanan -->
+                    <div class="text-right">
+                        <h2 class="text-2xl font-bold section-title-right">Provinsi Bengkulu</h2>
+                    </div>
+                </div>
+                
+                <!-- Map Container -->
+                <div class="bg-white rounded-lg p-8 h-80 flex items-center justify-center shadow-md mx-auto max-w-4xl relative">
+                    <div class="bengkulu-map">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Sumatra_location_map.svg/1200px-Sumatra_location_map.svg.png" 
+                            alt="Pulau Sumatera" class="w-full h-full object-contain">
+                        <div class="location-marker">
+                            <i class="fas fa-location-dot"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Description -->
+                <div class="mt-4 max-w-2xl">
+                    <p class="text-gray-600 text-lg text-left">
+                        Provinsi Bengkulu terletak di Pulau Sumatera, Indonesia. Memiliki keindahan alam yang menakjubkan 
+                        dan warisan budaya yang kaya. Dari pantai yang indah hingga hutan hujan tropis, Bengkulu menawarkan 
+                        pengalaman wisata yang tak terlupakan.
+                    </p>
+                </div>
+                
+                <!-- Info Overlay dengan Tombol X di Kiri Atas -->
+                <div id="infoOverlay" class="info-overlay">
+                    <!-- Tombol X untuk menutup overlay di kiri atas -->
+                    <button id="closeOverlay" class="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-md z-30 close-overlay-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div class="text-white text-center p-6 max-w-md relative">
+                        <h3 class="text-xl font-bold mb-4">Provinsi Bengkulu</h3>
+                        <p class="text-sm">
+                            Di utara berbatasan dengan Provinsi Sumatera Barat, di timur dengan 
+                            Provinsi Jambi dan Provinsi Sumatera Selatan, di selatan dengan Provinsi 
+                            Lampung, serta di barat berbatasan langsung dengan Samudera Hindia.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interesting Facts Section -->
+        <section class="py-10 bg-white" aria-labelledby="facts-heading">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-6">
+                    <h2 id="facts-heading" class="section-title">Fakta Menarik</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <div class="card fact-card">
+                        <div class="fact-icon-container">
+                            <img src="assets/images/monas-icon.png" alt="Ikon Monas" class="w-12 h-12">
+                        </div>
+                        <h3 class="text-lg font-bold mb-3">Monas</h3>
+                        <p class="text-gray-600 text-sm text-center">
+                            Emas pada Monumen Nasional (Monas) di Jakarta diambil dari daerah Lebong, Bengkulu
+                        </p>
+                    </div>
+                    
+                    <div class="card fact-card middle">
+                        <div class="fact-icon-container">
+                            <img src="assets/images/rafflesia-icon.png" alt="Ikon Bunga Rafflesia" class="w-12 h-12">
+                        </div>
+                        <h3 class="text-lg font-bold mb-3">Bunga Rafflesia</h3>
+                        <p class="text-gray-600 text-sm text-center">
+                            Bunga terbesar di dunia, Rafflesia Arnoldii, pertama kali ditemukan di Bengkulu
+                        </p>
+                    </div>
+                    
+                    <div class="card fact-card">
+                        <div class="fact-icon-container">
+                            <img src="assets/images/flag-icon.png" alt="Ikon Bendera" class="w-12 h-12">
+                        </div>
+                        <h3 class="text-lg font-bold mb-3">Bendera Pusaka</h3>
+                        <p class="text-gray-600 text-sm text-center">
+                            Bendera Pusaka Merah Putih dijahit oleh Ibu Fatmawati, putri asli Bengkulu
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fifth Section - Destinasi Wisata (17 Cards) -->
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold section-title">Destinasi Wisata</h2>
+                </div>
+                
+                <div class="carousel-container">
+                    <!-- Navigation Buttons -->
+                    <button id="prevBtn" class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-lg z-10">
+                        <i class="fas fa-chevron-left text-amber-600"></i>
+                    </button>
+                    
+                    <!-- Carousel Track -->
+                    <div class="carousel-track" id="carouselTrack">
+                        <!-- Card 1: Benteng Marlborough -->
+                        <div class="carousel-item bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                            <div class="destination-image bg-gray-300 flex items-center justify-center relative" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1598890777034-8d2c4fd373a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'); background-size: cover; background-position: center;">
+                                <div class="destination-title">
+                                    <h3 class="text-xl font-bold text-white">Benteng Marlborough</h3>
+                                    <p class="text-white text-sm mt-1">Ramah Parimandi</p>
+                                </div>
+                            </div>
+                            <div class="p-4 text-left">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-map-marker-alt text-amber-500 mr-2"></i>
+                                    <span class="text-gray-600">Pasar Kampung, Kota Bengkulu</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4">
+                                    Benteng peninggalan Inggris terbesar di Asia Tenggara yang dibangun pada abad ke-18, menyimpan sejarah panjang kolonialisme di Bengkulu.
+                                </p>
+                                <button class="btn-primary font-bold py-2 px-6 rounded-lg w-full text-center">
+                                    Mulai Tur
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Card 2: Pantai Panjang -->
+                        <div class="carousel-item bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                            <div class="destination-image bg-gray-300 flex items-center justify-center relative" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'); background-size: cover; background-position: center;">
+                                <div class="destination-title">
+                                    <h3 class="text-xl font-bold text-white">Pantai Panjang</h3>
+                                    <p class="text-white text-sm mt-1">A MALIFORNEMENT</p>
+                                </div>
+                            </div>
+                            <div class="p-4 text-left">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-map-marker-alt text-amber-500 mr-2"></i>
+                                    <span class="text-gray-600">Pantai Panjang, Kota Bengkulu</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4">
+                                    Pantai dengan pasir putih sepanjang 7 km di Kota Bengkulu, menawarkan pemandangan matahari terbenam yang menakjubkan.
+                                </p>
+                                <button class="btn-primary font-bold py-2 px-6 rounded-lg w-full text-center">
+                                    Mulai Tur
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Card 3: Rumah Fatmawati -->
+                        <div class="carousel-item bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                            <div class="destination-image bg-gray-300 flex items-center justify-center relative" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1458&q=80'); background-size: cover; background-position: center;">
+                                <div class="destination-title">
+                                    <h3 class="text-xl font-bold text-white">Rumah Fatmawati</h3>
+                                    <p class="text-white text-sm mt-1">Ramah Pengasingan Bung Karno</p>
+                                </div>
+                            </div>
+                            <div class="p-4 text-left">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-map-marker-alt text-amber-500 mr-2"></i>
+                                    <span class="text-gray-600">Kota Bengkulu</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4">
+                                    Rumah bersejarah peninggalan ibu Negara pertama Indonesia, Fatmawati, yang menjahit bendera pusaka merah putih.
+                                </p>
+                                <button class="btn-primary font-bold py-2 px-6 rounded-lg w-full text-center">
+                                    Mulai Tur
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Card 4: Museum Negeri Bengkulu -->
+                        <div class="carousel-item bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                            <div class="destination-image bg-gray-300 flex items-center justify-center relative" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80'); background-size: cover; background-position: center;">
+                                <div class="destination-title">
+                                    <h3 class="text-xl font-bold text-white">Museum Negeri Bengkulu</h3>
+                                    <p class="text-white text-sm mt-1">Mazarin Najeri Binghair</p>
+                                </div>
+                            </div>
+                            <div class="p-4 text-left">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-map-marker-alt text-amber-500 mr-2"></i>
+                                    <span class="text-gray-600">Kota Bengkulu</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4">
+                                    Museum yang menyimpan berbagai artefak sejarah dan budaya Bengkulu, termasuk peninggalan zaman prasejarah.
+                                </p>
+                                <button class="btn-primary font-bold py-2 px-6 rounded-lg w-full text-center">
+                                    Mulai Tur
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Card 5: Bukit Kaba -->
+                        <div class="carousel-item bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                            <div class="destination-image bg-gray-300 flex items-center justify-center relative" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'); background-size: cover; background-position: center;">
+                                <div class="destination-title">
+                                    <h3 class="text-xl font-bold text-white">Bukit Kaba</h3>
+                                    <p class="text-white text-sm mt-1">Gunung Berapi Aktif</p>
+                                </div>
+                            </div>
+                            <div class="p-4 text-left">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-map-marker-alt text-amber-500 mr-2"></i>
+                                    <span class="text-gray-600">Rejang Lebong</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4">
+                                    Gunung berapi dengan kawah ganda yang aktif, menawarkan pemandangan alam yang menakjubkan dan trekking yang menantang.
+                                </p>
+                                <button class="btn-primary font-bold py-2 px-6 rounded-lg w-full text-center">
+                                    Mulai Tur
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Card 6: Air Terjun Kepala Curup -->
+                        <div class="carousel-item bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                            <div class="destination-image bg-gray-300 flex items-center justify-center relative" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1439066615861-d1af74d74000?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80'); background-size: cover; background-position: center;">
+                                <div class="destination-title">
+                                    <h3 class="text-xl font-bold text-white">Air Terjun Kepala Curup</h3>
+                                    <p class="text-white text-sm mt-1">Air Terjun Spektakuler</p>
+                                </div>
+                            </div>
+                            <div class="p-4 text-left">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-map-marker-alt text-amber-500 mr-2"></i>
+                                    <span class="text-gray-600">Rejang Lebong</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4">
+                                    Air terjun setinggi 100 meter dengan pemandangan hutan tropis yang masih asri, cocok untuk pecinta alam.
+                                </p>
+                                <button class="btn-primary font-bold py-2 px-6 rounded-lg w-full text-center">
+                                    Mulai Tur
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Card 7: Pantai Tapak Paderi -->
+                        <div class="carousel-item bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                            <div class="destination-image bg-gray-300 flex items-center justify-center relative" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'); background-size: cover; background-position: center;">
+                                <div class="destination-title">
+                                    <h3 class="text-xl font-bold text-white">Pantai Tapak Paderi</h3>
+                                    <p class="text-white text-sm mt-1">Pantai Pusat Kota</p>
+                                </div>
+                            </div>
+                            <div class="p-4 text-left">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-map-marker-alt text-amber-500 mr-2"></i>
+                                    <span class="text-gray-600">Kota Bengkulu</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4">
+                                    Pantai yang terletak di pusat kota dengan pemandangan matahari terbenam yang indah dan area bermain keluarga.
+                                </p>
+                                <button class="btn-primary font-bold py-2 px-6 rounded-lg w-full text-center">
+                                    Mulai Tur
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Card 8: Pulau Tikus -->
+                        <div class="carousel-item bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                            <div class="destination-image bg-gray-300 flex items-center justify-center relative" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'); background-size: cover; background-position: center;">
+                                <div class="destination-title">
+                                    <h3 class="text-xl font-bold text-white">Pulau Tikus</h3>
+                                    <p class="text-white text-sm mt-1">Pulau Karang Indah</p>
+                                </div>
+                            </div>
+                            <div class="p-4 text-left">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-map-marker-alt text-amber-500 mr-2"></i>
+                                    <span class="text-gray-600">Kota Bengkulu</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4">
+                                    Pulau kecil di lepas pantai Bengkulu dengan terumbu karang yang indah, cocok untuk snorkeling dan diving.
+                                </p>
+                                <button class="btn-primary font-bold py-2 px-6 rounded-lg w-full text-center">
+                                    Mulai Tur
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Card 9: Taman Wisata Alam Hutan Pantai Panjang -->
+                        <div class="carousel-item bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                            <div class="destination-image bg-gray-300 flex items-center justify-center relative" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1476&q=80'); background-size: cover; background-position: center;">
+                                <div class="destination-title">
+                                    <h3 class="text-xl font-bold text-white">Taman Wisata Alam Hutan Pantai Panjang</h3>
+                                    <p class="text-white text-sm mt-1">Kawasan Hutan Lindung</p>
+                                </div>
+                            </div>
+                            <div class="p-4 text-left">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-map-marker-alt text-amber-500 mr-2"></i>
+                                    <span class="text-gray-600">Kota Bengkulu</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4">
+                                    Kawasan hutan pantai yang dilindungi dengan berbagai flora dan fauna khas Bengkulu.
+                                </p>
+                                <button class="btn-primary font-bold py-2 px-6 rounded-lg w-full text-center">
+                                    Mulai Tur
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Card 10: Taman Wisata Alam Danau Dendam Tak Sudah -->
+                        <div class="carousel-item bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                            <div class="destination-image bg-gray-300 flex items-center justify-center relative" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1474&q=80'); background-size: cover; background-position: center;">
+                                <div class="destination-title">
+                                    <h3 class="text-xl font-bold text-white">Taman Wisata Alam Danau Dendam Tak Sudah</h3>
+                                    <p class="text-white text-sm mt-1">Ekosistem Rawa Unik</p>
+                                </div>
+                            </div>
+                            <div class="p-4 text-left">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-map-marker-alt text-amber-500 mr-2"></i>
+                                    <span class="text-gray-600">Kota Bengkulu</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4">
+                                    Danau alami dengan ekosistem rawa yang unik dan menjadi habitat bagi berbagai spesies anggrek langka.
+                                </p>
+                                <button class="btn-primary font-bold py-2 px-6 rounded-lg w-full text-center">
+                                    Mulai Tur
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Card 11: Taman Hutan Raya Bung Karno -->
+                        <div class="carousel-item bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                            <div class="destination-image bg-gray-300 flex items-center justify-center relative" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80'); background-size: cover; background-position: center;">
+                                <div class="destination-title">
+                                    <h3 class="text-xl font-bold text-white">Taman Hutan Raya Bung Karno</h3>
+                                    <p class="text-white text-sm mt-1">Paru-Paru Kota</p>
+                                </div>
+                            </div>
+                            <div class="p-4 text-left">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-map-marker-alt text-amber-500 mr-2"></i>
+                                    <span class="text-gray-600">Kota Bengkulu</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4">
+                                    Taman hutan kota yang menjadi paru-paru kota Bengkulu dengan berbagai koleksi tanaman khas Sumatera.
+                                </p>
+                                <button class="btn-primary font-bold py-2 px-6 rounded-lg w-full text-center">
+                                    Mulai Tur
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Card 12: Taman Wisata Alam Seblat -->
+                        <div class="carousel-item bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                            <div class="destination-image bg-gray-300 flex items-center justify-center relative" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'); background-size: cover; background-position: center;">
+                                <div class="destination-title">
+                                    <h3 class="text-xl font-bold text-white">Taman Wisata Alam Seblat</h3>
+                                    <p class="text-white text-sm mt-1">Kawasan Konservasi Gajah</p>
+                                </div>
+                            </div>
+                            <div class="p-4 text-left">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-map-marker-alt text-amber-500 mr-2"></i>
+                                    <span class="text-gray-600">Bengkulu Utara</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4">
+                                    Kawasan konservasi gajah Sumatera dengan pemandangan hutan tropis yang masih asri dan berbagai satwa liar.
+                                </p>
+                                <button class="btn-primary font-bold py-2 px-6 rounded-lg w-full text-center">
+                                    Mulai Tur
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Card 13: Pantai Laguna Samudra -->
+                        <div class="carousel-item bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                            <div class="destination-image bg-gray-300 flex items-center justify-center relative" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'); background-size: cover; background-position: center;">
+                                <div class="destination-title">
+                                    <h3 class="text-xl font-bold text-white">Pantai Laguna Samudra</h3>
+                                    <p class="text-white text-sm mt-1">Pantai dengan Laguna</p>
+                                </div>
+                            </div>
+                            <div class="p-4 text-left">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-map-marker-alt text-amber-500 mr-2"></i>
+                                    <span class="text-gray-600">Seluma</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4">
+                                    Pantai dengan laguna yang indah dan air yang jernih, cocok untuk berenang dan bersantai dengan keluarga.
+                                </p>
+                                <button class="btn-primary font-bold py-2 px-6 rounded-lg w-full text-center">
+                                    Mulai Tur
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Card 14: Air Terjun Suban -->
+                        <div class="carousel-item bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                            <div class="destination-image bg-gray-300 flex items-center justify-center relative" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'); background-size: cover; background-position: center;">
+                                <div class="destination-title">
+                                    <h3 class="text-xl font-bold text-white">Air Terjun Suban</h3>
+                                    <p class="text-white text-sm mt-1">Tujuh Tingkat Menakjubkan</p>
+                                </div>
+                            </div>
+                            <div class="p-4 text-left">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-map-marker-alt text-amber-500 mr-2"></i>
+                                    <span class="text-gray-600">Kaur</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4">
+                                    Air terjun dengan tujuh tingkat yang menakjubkan, dikelilingi oleh hutan tropis yang masih asri.
+                                </p>
+                                <button class="btn-primary font-bold py-2 px-6 rounded-lg w-full text-center">
+                                    Mulai Tur
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Card 15: Taman Nasional Kerinci Seblat -->
+                        <div class="carousel-item bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                            <div class="destination-image bg-gray-300 flex items-center justify-center relative" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'); background-size: cover; background-position: center;">
+                                <div class="destination-title">
+                                    <h3 class="text-xl font-bold text-white">Taman Nasional Kerinci Seblat</h3>
+                                    <p class="text-white text-sm mt-1">Keanekaragaman Hayati Tinggi</p>
+                                </div>
+                            </div>
+                            <div class="p-4 text-left">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-map-marker-alt text-amber-500 mr-2"></i>
+                                    <span class="text-gray-600">Bengkulu Utara</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4">
+                                    Salah satu taman nasional terbesar di Indonesia dengan keanekaragaman hayati yang sangat tinggi.
+                                </p>
+                                <button class="btn-primary font-bold py-2 px-6 rounded-lg w-full text-center">
+                                    Mulai Tur
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Card 16: Danau Tes -->
+                        <div class="carousel-item bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                            <div class="destination-image bg-gray-300 flex items-center justify-center relative" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'); background-size: cover; background-position: center;">
+                                <div class="destination-title">
+                                    <h3 class="text-xl font-bold text-white">Danau Tes</h3>
+                                    <p class="text-white text-sm mt-1">Danau Buatan Terbesar</p>
+                                </div>
+                            </div>
+                            <div class="p-4 text-left">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-map-marker-alt text-amber-500 mr-2"></i>
+                                    <span class="text-gray-600">Lebong</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4">
+                                    Danau buatan terbesar di Bengkulu dengan pemandangan yang menakjubkan dan udara sejuk.
+                                </p>
+                                <button class="btn-primary font-bold py-2 px-6 rounded-lg w-full text-center">
+                                    Mulai Tur
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Card 17: Danau Musi (Card Tengah) -->
+                        <div class="carousel-item bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 active">
+                            <div class="destination-image bg-gray-300 flex items-center justify-center relative" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'); background-size: cover; background-position: center;">
+                                <div class="destination-title">
+                                    <h3 class="text-xl font-bold text-white">Danau Musi</h3>
+                                    <p class="text-white text-sm mt-1">Danau Alami Terbesar</p>
+                                </div>
+                            </div>
+                            <div class="p-4 text-left">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-map-marker-alt text-amber-500 mr-2"></i>
+                                    <span class="text-gray-600">Bengkulu Selatan</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4">
+                                    Danau alami terbesar di Bengkulu dengan pemandangan yang memukau dan beragam spesies ikan air tawar.
+                                </p>
+                                <button class="btn-primary font-bold py-2 px-6 rounded-lg w-full text-center">
+                                    Mulai Tur
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="nextBtn" class="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-lg z-10">
+                        <i class="fas fa-chevron-right text-amber-600"></i>
+                    </button>
+                </div>
+                
+                <!-- Dots Indicator -->
+                <div class="destination-dots flex justify-center mt-6 space-x-2" id="destinationDots">
+                    <!-- Dots akan digenerate oleh JavaScript -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container mx-auto px-6">
+            <div class="footer-content">
+                <div class="flex flex-col">
+                    <div class="flex items-center mb-4">
+                        <div class="logo-icon">
+                            <!-- Logo placeholder -->
+                            <i class="fas fa-mountain text-white"></i>
+                        </div>
+                        <div class="logo-text">PadmaTour</div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6">
+                        PadmaTour membantu Anda menjelajahi dan lebih mengenal keindahan alam, budaya, dan warisan sejarah daerah Bengkulu. Mari bersama kita jaga kelestarian lingkungan Bengkulu.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram text-xs" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="TikTok">
+                            <i class="fab fa-tiktok text-xs" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="YouTube">
+                            <i class="fab fa-youtube text-xs" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col">
+                    <h3 class="text-md font-bold mb-4">Navigasi</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition nav-link active">Beranda</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition nav-link">Profil Daerah</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition nav-link">EcoTips</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition nav-link">Tentang</a></li>
+                    </ul>
+                </div>
+                
+                <div class="flex flex-col">
+                    <h3 class="text-md font-bold mb-4">Kontak Kami</h3>
+                    <ul class="space-y-3 text-gray-400 text-sm">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-amber-500 text-xs" aria-hidden="true"></i>
+                            <a href="mailto:info@padmatour.com" class="hover:text-white transition">info@padmatour.com</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3 text-amber-500 text-xs" aria-hidden="true"></i>
+                            <span>+62 812 3456 7890</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3 text-amber-500 text-xs" aria-hidden="true"></i>
+                            <span>Jl. Veteran No. 1, Kota Bengkulu</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400 text-sm">
+                <p>© 2025 PadmaTour. Semua hak dilindungi undang-undang.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript yang Diperbaiki -->
+    <script>
+        // Inisialisasi setelah DOM siap
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu functionality
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', function() {
+                    const expanded = this.getAttribute('aria-expanded') === 'true';
+                    this.setAttribute('aria-expanded', !expanded);
+                    // Implementation for mobile menu toggle
+                    if (mobileMenu) {
+                        mobileMenu.classList.toggle('active');
+                    }
+                });
+            }
+            
+            // Info button dan overlay functionality
+            const infoBtn = document.getElementById('infoBtn');
+            const infoIcon = document.getElementById('infoIcon');
+            const overlay = document.getElementById('infoOverlay');
+            const closeOverlay = document.getElementById('closeOverlay');
+            
+            if (infoBtn && overlay) {
+                infoBtn.addEventListener('click', function() {
+                    overlay.classList.add('active');
+                    infoIcon.classList.remove('fa-info');
+                    infoIcon.classList.add('fa-times');
+                });
+            }
+            
+            if (closeOverlay && overlay) {
+                closeOverlay.addEventListener('click', function() {
+                    overlay.classList.remove('active');
+                    infoIcon.classList.remove('fa-times');
+                    infoIcon.classList.add('fa-info');
+                });
+            }
+            
+            // Tutup overlay ketika klik di luar konten
+            if (overlay) {
+                overlay.addEventListener('click', function(e) {
+                    if (e.target === overlay) {
+                        overlay.classList.remove('active');
+                        infoIcon.classList.remove('fa-times');
+                        infoIcon.classList.add('fa-info');
+                    }
+                });
+            }
+            
+            // Back to top button
+            const backToTopButton = document.getElementById('backToTop');
+            
+            if (backToTopButton) {
+                window.addEventListener('scroll', () => {
+                    if (window.pageYOffset > 300) {
+                        backToTopButton.classList.add('show');
+                    } else {
+                        backToTopButton.classList.remove('show');
+                    }
+                });
+                
+                backToTopButton.addEventListener('click', () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+            
+            // Counter animation
+            const counters = document.querySelectorAll('.counter');
+            const speed = 200;
+            
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const increment = target / speed;
+                
+                if(count < target) {
+                    const updateCount = () => {
+                        const currentCount = +counter.innerText;
+                        
+                        if(currentCount < target) {
+                            counter.innerText = Math.ceil(currentCount + increment);
+                            setTimeout(updateCount, 1);
+                        } else {
+                            counter.innerText = target.toLocaleString();
+                        }
+                    };
+                    
+                    updateCount();
+                } else {
+                    counter.innerText = target.toLocaleString();
+                }
+            });
+            
+            // Carousel functionality untuk destinasi wisata
+            const track = document.getElementById('carouselTrack');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const dotsContainer = document.getElementById('destinationDots');
+            const carouselItems = track.querySelectorAll('.carousel-item');
+            
+            const itemCount = carouselItems.length;
+            let currentPosition = 8; // Mulai dari card tengah (index 8) - Danau Musi
+            
+            // Generate dots
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < itemCount; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('destination-dot', 'w-3', 'h-3', 'bg-gray-300', 'rounded-full', 'cursor-pointer');
+                if (i === currentPosition) {
+                    dot.classList.add('active');
+                    dot.classList.remove('bg-gray-300');
+                    dot.classList.add('bg-amber-500');
+                }
+                dot.addEventListener('click', () => {
+                    currentPosition = i;
+                    updateCarousel();
+                });
+                dotsContainer.appendChild(dot);
+            }
+            
+            // Update carousel position
+            function updateCarousel() {
+                const itemWidth = carouselItems[0].offsetWidth + 24; // width + gap
+                const scrollPosition = currentPosition * itemWidth;
+                
+                track.scrollTo({
+                    left: scrollPosition,
+                    behavior: 'smooth'
+                });
+                
+                // Update active states
+                carouselItems.forEach((item, index) => {
+                    item.classList.toggle('active', index === currentPosition);
+                });
+                
+                // Update dots
+                const dots = dotsContainer.querySelectorAll('.destination-dot');
+                dots.forEach((dot, index) => {
+                    if (index === currentPosition) {
+                        dot.classList.add('active');
+                        dot.classList.remove('bg-gray-300');
+                        dot.classList.add('bg-amber-500');
+                    } else {
+                        dot.classList.remove('active');
+                        dot.classList.add('bg-gray-300');
+                        dot.classList.remove('bg-amber-500');
+                    }
+                });
+            }
+            
+            // Event listeners untuk navigation
+            prevBtn.addEventListener('click', () => {
+                if (currentPosition > 0) {
+                    currentPosition--;
+                } else {
+                    currentPosition = itemCount - 1;
+                }
+                updateCarousel();
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                if (currentPosition < itemCount - 1) {
+                    currentPosition++;
+                } else {
+                    currentPosition = 0;
+                }
+                updateCarousel();
+            });
+            
+            // Initialize carousel
+            updateCarousel();
+            
+            // Keyboard navigation for carousel
+            if (track) {
+                track.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        if (currentPosition > 0) {
+                            currentPosition--;
+                        } else {
+                            currentPosition = itemCount - 1;
+                        }
+                        updateCarousel();
+                    } else if (e.key === 'ArrowRight') {
+                        e.preventDefault();
+                        if (currentPosition < itemCount - 1) {
+                            currentPosition++;
+                        } else {
+                            currentPosition = 0;
+                        }
+                        updateCarousel();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
