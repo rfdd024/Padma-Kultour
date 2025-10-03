@@ -66,6 +66,7 @@
             align-items: center;
             justify-content: center;
             margin-right: 0.75rem;
+            overflow: hidden;
         }
         
         .logo-text {
@@ -231,6 +232,7 @@
             align-items: center;
             justify-content: center;
             margin: 0 auto 1rem;
+            overflow: hidden;
         }
         
         /* Carousel */
@@ -499,14 +501,6 @@
             background-color: #D4AF37;
             transform: scale(1.2);
         }
-
-        /* Tombol tutup overlay di kiri atas */
-        .close-overlay-btn {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
     </style>
 </head>
 <body>
@@ -526,8 +520,7 @@
             <nav class="navigation-container" role="navigation" aria-label="Main navigation">
                 <div class="logo-brand">
                     <div class="logo-icon">
-                        <!-- Logo placeholder -->
-                        <i class="fas fa-mountain text-white"></i>
+                        <img src="assets/images/logo.png" alt="PadmaTour Logo" class="w-full h-full object-cover">
                     </div>
                     <div class="logo-text">PadmaTour</div>
                 </div>
@@ -595,12 +588,12 @@
             </div>
         </section>
 
-        <!-- Third Section - Province Info dengan Tombol X di Kiri Atas -->
+        <!-- Third Section - Province Info dengan Tombol i yang berubah menjadi X -->
         <section class="py-16 bg-gray-50 relative">
             <div class="container mx-auto px-6">
                 <!-- Title & Info Button -->
                 <div class="flex justify-between items-start mb-8">
-                    <!-- Info Button di kiri -->
+                    <!-- Info Button di kiri yang berubah menjadi X -->
                     <button id="infoBtn" class="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-md z-10">
                         <i class="fas fa-info" id="infoIcon"></i>
                     </button>
@@ -631,12 +624,8 @@
                     </p>
                 </div>
                 
-                <!-- Info Overlay dengan Tombol X di Kiri Atas -->
+                <!-- Info Overlay (tanpa tombol X di dalamnya) -->
                 <div id="infoOverlay" class="info-overlay">
-                    <!-- Tombol X untuk menutup overlay di kiri atas -->
-                    <button id="closeOverlay" class="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-md z-30 close-overlay-btn">
-                        <i class="fas fa-times"></i>
-                    </button>
                     <div class="text-white text-center p-6 max-w-md relative">
                         <h3 class="text-xl font-bold mb-4">Provinsi Bengkulu</h3>
                         <p class="text-sm">
@@ -690,7 +679,7 @@
             </div>
         </section>
 
-        <!-- Fifth Section - Destinasi Wisata (17 Cards) -->
+        <!-- Fifth Section - Destinasi Wisata (17 Cards, dimulai dari card pertama) -->
         <section class="py-16 bg-gray-50">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
@@ -706,7 +695,7 @@
                     <!-- Carousel Track -->
                     <div class="carousel-track" id="carouselTrack">
                         <!-- Card 1: Benteng Marlborough -->
-                        <div class="carousel-item bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                        <div class="carousel-item bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 active">
                             <div class="destination-image bg-gray-300 flex items-center justify-center relative" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1598890777034-8d2c4fd373a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'); background-size: cover; background-position: center;">
                                 <div class="destination-title">
                                     <h3 class="text-xl font-bold text-white">Benteng Marlborough</h3>
@@ -1057,8 +1046,8 @@
                             </div>
                         </div>
                         
-                        <!-- Card 17: Danau Musi (Card Tengah) -->
-                        <div class="carousel-item bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 active">
+                        <!-- Card 17: Danau Musi -->
+                        <div class="carousel-item bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
                             <div class="destination-image bg-gray-300 flex items-center justify-center relative" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'); background-size: cover; background-position: center;">
                                 <div class="destination-title">
                                     <h3 class="text-xl font-bold text-white">Danau Musi</h3>
@@ -1100,8 +1089,7 @@
                 <div class="flex flex-col">
                     <div class="flex items-center mb-4">
                         <div class="logo-icon">
-                            <!-- Logo placeholder -->
-                            <i class="fas fa-mountain text-white"></i>
+                            <img src="assets/images/logo.png" alt="PadmaTour Logo" class="w-full h-full object-cover">
                         </div>
                         <div class="logo-text">PadmaTour</div>
                     </div>
@@ -1179,21 +1167,22 @@
             const infoBtn = document.getElementById('infoBtn');
             const infoIcon = document.getElementById('infoIcon');
             const overlay = document.getElementById('infoOverlay');
-            const closeOverlay = document.getElementById('closeOverlay');
             
             if (infoBtn && overlay) {
                 infoBtn.addEventListener('click', function() {
-                    overlay.classList.add('active');
-                    infoIcon.classList.remove('fa-info');
-                    infoIcon.classList.add('fa-times');
-                });
-            }
-            
-            if (closeOverlay && overlay) {
-                closeOverlay.addEventListener('click', function() {
-                    overlay.classList.remove('active');
-                    infoIcon.classList.remove('fa-times');
-                    infoIcon.classList.add('fa-info');
+                    const isOverlayActive = overlay.classList.contains('active');
+                    
+                    if (isOverlayActive) {
+                        // Tutup overlay dan ubah ikon menjadi 'info'
+                        overlay.classList.remove('active');
+                        infoIcon.classList.remove('fa-times');
+                        infoIcon.classList.add('fa-info');
+                    } else {
+                        // Buka overlay dan ubah ikon menjadi 'times'
+                        overlay.classList.add('active');
+                        infoIcon.classList.remove('fa-info');
+                        infoIcon.classList.add('fa-times');
+                    }
                 });
             }
             
@@ -1263,7 +1252,7 @@
             const carouselItems = track.querySelectorAll('.carousel-item');
             
             const itemCount = carouselItems.length;
-            let currentPosition = 8; // Mulai dari card tengah (index 8) - Danau Musi
+            let currentPosition = 0; // Mulai dari card pertama
             
             // Generate dots
             dotsContainer.innerHTML = '';

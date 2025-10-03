@@ -236,13 +236,16 @@
             box-shadow: var(--shadow-medium);
         }
         
-        .history-timeline {
+        /* Sejarah Timeline Styles */
+        .history-section {
             position: relative;
             max-width: 100%;
             margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        }
+        
+        .history-timeline {
+            position: relative;
+            margin-top: 3rem;
         }
         
         .timeline-line {
@@ -258,7 +261,7 @@
         
         .timeline-item {
             position: relative;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
             width: 100%;
             display: flex;
             align-items: center;
@@ -296,10 +299,12 @@
             border: 4px solid var(--background-white);
         }
         
+        /* Galeri Styles */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: repeat(8, 5vw);
+            gap: 1rem;
         }
         
         .gallery-item {
@@ -308,11 +313,10 @@
             overflow: hidden;
             box-shadow: var(--shadow-light);
             transition: all 0.3s ease;
-            aspect-ratio: 1/1;
         }
         
         .gallery-item:hover {
-            transform: scale(1.05);
+            transform: scale(1.03);
             box-shadow: var(--shadow-medium);
         }
         
@@ -322,40 +326,122 @@
             object-fit: cover;
         }
         
-        .culinary-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
+        .gallery-item-1 {
+            grid-column: 1 / 5;
+            grid-row: 1 / 5;
+            border-top-right-radius: 3rem;
+        }
+        
+        .gallery-item-2 {
+            grid-column: 5 / 9;
+            grid-row: 1 / 4;
+            border-bottom-left-radius: 3rem;
+        }
+        
+        .gallery-item-3 {
+            grid-column: 9 / 13;
+            grid-row: 1 / 6;
+            border-top-left-radius: 3rem;
+            border-bottom-right-radius: 3rem;
+        }
+        
+        .gallery-item-4 {
+            grid-column: 1 / 4;
+            grid-row: 5 / 9;
+            border-top-left-radius: 3rem;
+            border-bottom-right-radius: 3rem;
+        }
+        
+        .gallery-item-5 {
+            grid-column: 4 / 8;
+            grid-row: 5 / 9;
+            border-bottom-left-radius: 3rem;
+        }
+        
+        .gallery-item-6 {
+            grid-column: 8 / 13;
+            grid-row: 6 / 9;
+            border-top-right-radius: 3rem;
+        }
+        
+        /* Kuliner Styles */
+        .culinary-container {
+            position: relative;
+            height: 500px;
+            margin-top: 2rem;
+        }
+        
+        .culinary-stack {
+            position: relative;
+            width: 100%;
+            height: 100%;
         }
         
         .culinary-item {
-            position: relative;
+            position: absolute;
             border-radius: 1.5rem;
             overflow: hidden;
-            box-shadow: var(--shadow-light);
-            transition: all 0.3s ease;
-            aspect-ratio: 1/1;
-        }
-        
-        .culinary-item:nth-child(odd) {
-            border-top-right-radius: 4rem;
-            border-bottom-left-radius: 4rem;
-        }
-        
-        .culinary-item:nth-child(even) {
-            border-top-left-radius: 4rem;
-            border-bottom-right-radius: 4rem;
-        }
-        
-        .culinary-item:hover {
-            transform: rotate(3deg) scale(1.05);
             box-shadow: var(--shadow-medium);
+            transition: all 0.5s ease;
+            cursor: pointer;
+            filter: brightness(0.8);
         }
         
         .culinary-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+        
+        .culinary-item:hover {
+            transform: scale(1.1);
+            filter: brightness(1);
+            z-index: 10 !important;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .culinary-item-1 {
+            width: 280px;
+            height: 200px;
+            top: 50px;
+            left: 10%;
+            transform: rotate(-5deg);
+            z-index: 1;
+            border-top-right-radius: 4rem;
+            border-bottom-left-radius: 2rem;
+        }
+        
+        .culinary-item-2 {
+            width: 300px;
+            height: 220px;
+            top: 80px;
+            left: 30%;
+            transform: rotate(3deg);
+            z-index: 2;
+            border-top-left-radius: 4rem;
+            border-bottom-right-radius: 2rem;
+        }
+        
+        .culinary-item-3 {
+            width: 260px;
+            height: 190px;
+            top: 150px;
+            left: 55%;
+            transform: rotate(-2deg);
+            z-index: 3;
+            border-top-left-radius: 2rem;
+            border-bottom-right-radius: 4rem;
+        }
+        
+        .culinary-item-4 {
+            width: 290px;
+            height: 210px;
+            top: 200px;
+            left: 20%;
+            transform: rotate(4deg);
+            z-index: 4;
+            border-top-right-radius: 2rem;
+            border-bottom-left-radius: 4rem;
         }
         
         @media (max-width: 768px) {
@@ -372,8 +458,41 @@
                 left: 30px;
             }
             
-            .culinary-grid {
+            .gallery-grid {
                 grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+            
+            .gallery-item-1,
+            .gallery-item-2,
+            .gallery-item-3,
+            .gallery-item-4,
+            .gallery-item-5,
+            .gallery-item-6 {
+                grid-column: 1 / -1;
+                grid-row: auto;
+            }
+            
+            .culinary-container {
+                height: 700px;
+            }
+            
+            .culinary-item {
+                position: relative;
+                margin-bottom: 2rem;
+                transform: none !important;
+            }
+            
+            .culinary-item-1,
+            .culinary-item-2,
+            .culinary-item-3,
+            .culinary-item-4 {
+                position: relative;
+                width: 100%;
+                height: 200px;
+                top: auto;
+                left: auto;
+                margin-bottom: 2rem;
             }
         }
     </style>
@@ -472,92 +591,96 @@
         <!-- Section 2: Sejarah Bengkulu -->
         <section class="content-section bg-gray-50" aria-labelledby="sejarah-heading">
             <div class="container mx-auto px-6">
-                <h2 id="sejarah-heading" class="section-title mb-12">Sejarah Bengkulu</h2>
+                <div class="text-center">
+                    <h2 id="sejarah-heading" class="section-title mb-12">Sejarah Bengkulu</h2>
+                </div>
                 
-                <div class="history-timeline">
-                    <div class="timeline-line"></div>
-                    
-                    <!-- Item 1 -->
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <h3 class="text-xl font-bold mb-2">Abad ke-16</h3>
-                            <p class="text-gray-600">
-                                Bengkulu berada di bawah pengaruh Kerajaan Inderapura dan Kesultanan Banten. Wilayah ini menjadi pusat perdagangan rempah-rempah dengan pedagang dari berbagai negara.
-                            </p>
-                        </div>
-                        <div class="timeline-marker"></div>
-                        <div class="timeline-image">
-                            <div class="content-image">
-                                <img src="https://images.unsplash.com/photo-1598974357801-cbca100e65d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
-                                     alt="Peninggalan sejarah Bengkulu" class="w-full h-48 object-cover">
+                <div class="history-section">
+                    <div class="history-timeline">
+                        <div class="timeline-line"></div>
+                        
+                        <!-- Item 1 -->
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <h3 class="text-xl font-bold mb-2">Abad ke-16</h3>
+                                <p class="text-gray-600">
+                                    Bengkulu berada di bawah pengaruh Kerajaan Inderapura dan Kesultanan Banten. Wilayah ini menjadi pusat perdagangan rempah-rempah dengan pedagang dari berbagai negara.
+                                </p>
+                            </div>
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-image">
+                                <div class="content-image">
+                                    <img src="https://images.unsplash.com/photo-1598974357801-cbca100e65d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+                                         alt="Peninggalan sejarah Bengkulu" class="w-full h-48 object-cover">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- Item 2 -->
-                    <div class="timeline-item">
-                        <div class="timeline-image">
-                            <div class="content-image">
-                                <img src="https://images.unsplash.com/photo-1592409065737-2535a731a3e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
-                                     alt="Benteng Marlborough" class="w-full h-48 object-cover">
+                        
+                        <!-- Item 2 -->
+                        <div class="timeline-item">
+                            <div class="timeline-image">
+                                <div class="content-image">
+                                    <img src="https://images.unsplash.com/photo-1592409065737-2535a731a3e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+                                         alt="Benteng Marlborough" class="w-full h-48 object-cover">
+                                </div>
+                            </div>
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h3 class="text-xl font-bold mb-2">1685</h3>
+                                <p class="text-gray-600">
+                                    Inggris mendirikan pos perdagangan di Bengkulu dan membangun Benteng Marlborough, yang menjadi pusat perdagangan lada dan salah satu benteng terbesar di Asia Tenggara.
+                                </p>
                             </div>
                         </div>
-                        <div class="timeline-marker"></div>
-                        <div class="timeline-content">
-                            <h3 class="text-xl font-bold mb-2">1685</h3>
-                            <p class="text-gray-600">
-                                Inggris mendirikan pos perdagangan di Bengkulu dan membangun Benteng Marlborough, yang menjadi pusat perdagangan lada dan salah satu benteng terbesar di Asia Tenggara.
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <!-- Item 3 -->
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <h3 class="text-xl font-bold mb-2">1824</h3>
-                            <p class="text-gray-600">
-                                Melalui Traktat London, Inggris menyerahkan Bengkulu kepada Belanda sebagai bagian dari pertukaran wilayah. Bengkulu kemudian menjadi bagian dari Hindia Belanda.
-                            </p>
-                        </div>
-                        <div class="timeline-marker"></div>
-                        <div class="timeline-image">
-                            <div class="content-image">
-                                <img src="https://images.unsplash.com/photo-1589652717521-10c0d092dea9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
-                                     alt="Peninggalan kolonial Belanda" class="w-full h-48 object-cover">
+                        
+                        <!-- Item 3 -->
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <h3 class="text-xl font-bold mb-2">1824</h3>
+                                <p class="text-gray-600">
+                                    Melalui Traktat London, Inggris menyerahkan Bengkulu kepada Belanda sebagai bagian dari pertukaran wilayah. Bengkulu kemudian menjadi bagian dari Hindia Belanda.
+                                </p>
+                            </div>
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-image">
+                                <div class="content-image">
+                                    <img src="https://images.unsplash.com/photo-1589652717521-10c0d092dea9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+                                         alt="Peninggalan kolonial Belanda" class="w-full h-48 object-cover">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- Item 4 -->
-                    <div class="timeline-item">
-                        <div class="timeline-image">
-                            <div class="content-image">
-                                <img src="https://images.unsplash.com/photo-1541336032412-2048a678540d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
-                                     alt="Proklamasi Kemerdekaan" class="w-full h-48 object-cover">
+                        
+                        <!-- Item 4 -->
+                        <div class="timeline-item">
+                            <div class="timeline-image">
+                                <div class="content-image">
+                                    <img src="https://images.unsplash.com/photo-1541336032412-2048a678540d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+                                         alt="Proklamasi Kemerdekaan" class="w-full h-48 object-cover">
+                                </div>
+                            </div>
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h3 class="text-xl font-bold mb-2">1945</h3>
+                                <p class="text-gray-600">
+                                    Bengkulu menjadi bagian dari Republik Indonesia setelah proklamasi kemerdekaan. Ibu Fatmawati, putri asli Bengkulu, menjahit Bendera Pusaka Merah Putih.
+                                </p>
                             </div>
                         </div>
-                        <div class="timeline-marker"></div>
-                        <div class="timeline-content">
-                            <h3 class="text-xl font-bold mb-2">1945</h3>
-                            <p class="text-gray-600">
-                                Bengkulu menjadi bagian dari Republik Indonesia setelah proklamasi kemerdekaan. Ibu Fatmawati, putri asli Bengkulu, menjahit Bendera Pusaka Merah Putih.
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <!-- Item 5 -->
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <h3 class="text-xl font-bold mb-2">1968</h3>
-                            <p class="text-gray-600">
-                                Bengkulu resmi menjadi provinsi tersendiri, terpisah dari Sumatera Selatan. Provinsi ini terus berkembang dengan potensi alam dan budayanya yang kaya.
-                            </p>
-                        </div>
-                        <div class="timeline-marker"></div>
-                        <div class="timeline-image">
-                            <div class="content-image">
-                                <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
-                                     alt="Bengkulu modern" class="w-full h-48 object-cover">
+                        
+                        <!-- Item 5 -->
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <h3 class="text-xl font-bold mb-2">1968</h3>
+                                <p class="text-gray-600">
+                                    Bengkulu resmi menjadi provinsi tersendiri, terpisah dari Sumatera Selatan. Provinsi ini terus berkembang dengan potensi alam dan budayanya yang kaya.
+                                </p>
+                            </div>
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-image">
+                                <div class="content-image">
+                                    <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+                                         alt="Bengkulu modern" class="w-full h-48 object-cover">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -571,37 +694,29 @@
                 <h2 id="galeri-heading" class="section-title mb-12">Galeri Bengkulu</h2>
                 
                 <div class="gallery-grid">
-                    <div class="gallery-item">
+                    <div class="gallery-item gallery-item-1">
                         <img src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
                              alt="Pantai Panjang Bengkulu">
                     </div>
-                    <div class="gallery-item">
+                    <div class="gallery-item gallery-item-2">
                         <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
                              alt="Pegunungan Bukit Barisan">
                     </div>
-                    <div class="gallery-item">
+                    <div class="gallery-item gallery-item-3">
                         <img src="https://images.unsplash.com/photo-1464822759844-d2d1c3d2b246?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
                              alt="Hutan Lindung Bengkulu">
                     </div>
-                    <div class="gallery-item">
+                    <div class="gallery-item gallery-item-4">
                         <img src="https://images.unsplash.com/photo-1598974357801-cbca100e65d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
                              alt="Benteng Marlborough">
                     </div>
-                    <div class="gallery-item">
+                    <div class="gallery-item gallery-item-5">
                         <img src="https://images.unsplash.com/photo-1592409065737-2535a731a3e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
                              alt="Masjid Jamik Bengkulu">
                     </div>
-                    <div class="gallery-item">
+                    <div class="gallery-item gallery-item-6">
                         <img src="https://images.unsplash.com/photo-1589652717521-10c0d092dea9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
                              alt="Danau Dendam Tak Sudah">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1541336032412-2048a678540d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
-                             alt="Taman Wisata Bengkulu">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
-                             alt="Kota Bengkulu Malam Hari">
                     </div>
                 </div>
             </div>
@@ -626,24 +741,26 @@
                         </p>
                     </div>
                     
-                    <!-- Kolom Kanan: Grid Gambar Bentuk Unik -->
+                    <!-- Kolom Kanan: Stack Gambar dengan Efek Tumpuk -->
                     <div class="md:w-1/2">
-                        <div class="culinary-grid">
-                            <div class="culinary-item">
-                                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
-                                     alt="Pendap">
-                            </div>
-                            <div class="culinary-item">
-                                <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
-                                     alt="Lema">
-                            </div>
-                            <div class="culinary-item">
-                                <img src="https://images.unsplash.com/photo-1563379091339-03246963d96f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
-                                     alt="Tempoyak">
-                            </div>
-                            <div class="culinary-item">
-                                <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
-                                     alt="Bagar Hiu">
+                        <div class="culinary-container">
+                            <div class="culinary-stack">
+                                <div class="culinary-item culinary-item-1">
+                                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+                                         alt="Pendap">
+                                </div>
+                                <div class="culinary-item culinary-item-2">
+                                    <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+                                         alt="Lema">
+                                </div>
+                                <div class="culinary-item culinary-item-3">
+                                    <img src="https://images.unsplash.com/photo-1563379091339-03246963d96f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+                                         alt="Tempoyak">
+                                </div>
+                                <div class="culinary-item culinary-item-4">
+                                    <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+                                         alt="Bagar Hiu">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -747,6 +864,21 @@
                     });
                 });
             }
+
+            // Efek hover untuk kuliner
+            const culinaryItems = document.querySelectorAll('.culinary-item');
+            culinaryItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    // Reset semua item ke z-index default
+                    culinaryItems.forEach(i => {
+                        if (i !== this) {
+                            i.style.zIndex = '1';
+                        }
+                    });
+                    // Set item yang dihover ke z-index tertinggi
+                    this.style.zIndex = '10';
+                });
+            });
         });
     </script>
 </body>
